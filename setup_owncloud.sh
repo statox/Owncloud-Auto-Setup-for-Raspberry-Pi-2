@@ -245,6 +245,55 @@ read_pw () {
 	
 }
 
+set_values () {
+	echo_info "The script is setting values"
+
+	#Hostname and IP
+	hostname=
+	ip=
+	#password for the root user of mysql
+	mysqlRootPw=
+	#password for the owncloud user of mysql
+	ocDbUserPw=
+	#password for the owncloud administrator
+	ocAdminUserPw=
+
+
+	#Mysql configuration
+	#name of the mysql database for owncloud
+	ocDb=owncloud
+
+	#name of the mysql user for owncloud
+	ocDbUser=owncloud
+
+	#Apache2 configuration
+	#maximal size of files that could be uploaded to owncloud
+	maxFileSize=10G
+
+	#Typically user and group filled static
+	htuser='www-data'
+	htgroup='www-data'
+
+	#Owncloud configuration
+	#name of the owncloud administrator
+	ocAdminUser=admin
+
+
+	#path to the folder for files of owncloud
+	ocDataDir="/home/owncloud"
+
+	#Fail2Ban
+	#time zone for the owncloud log
+	logTimeZone="Europe/Paris"
+
+	#path where owncloud log should be saved
+	logFile="/var/log/owncloud.log"
+
+	#max fails until fail2ban ban an ip
+	maxRetry=3
+
+}
+
 ask_for_values () {
 	echo_info "The script now ask for some values that are necessary for the installation."
 	#You can customize the default values of the variables here or set a static value
@@ -345,7 +394,8 @@ install_self_signed_certificate () {
 #You can customize the called functions here (you are responsible for looking for dependencies between them)
 check_root
 check_not_installed
-ask_for_values
+#ask_for_values
+set_values
 generate_self_signed_certificate
 echo_info "Now the unattended part of the setup is started."
 install_owncloud
