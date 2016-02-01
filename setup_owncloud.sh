@@ -370,10 +370,12 @@ generate_self_signed_certificate () {
 	#Create a new ca
 	mkdir /etc/ssl/ownca/
 	cd /etc/ssl/ownca/
-	openssl genrsa -aes256 -out own-ca.key 2048
 	#Create the root certificate that is valid for 10 years
+    echo "Creation of root certificate"
+	openssl genrsa -aes256 -out own-ca.key 2048
 	openssl req -x509 -new -nodes -extensions v3_ca -key own-ca.key -days 3650 -out own-ca-root.pem -sha512
 	#Create a client certificate that is valid for 10 years and sign it
+    echo "Creation of client certificate"
 	openssl genrsa -out self-signed-cert.key 4096
 	openssl req -new -key self-signed-cert.key -out self-signed-cert.csr -sha512
 	openssl x509 -req -in self-signed-cert.csr -CA own-ca-root.pem -CAkey own-ca.key -CAcreateserial -out self-signed-cert.pem -days 3650 -sha512
